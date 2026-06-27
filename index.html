@@ -3,230 +3,844 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>White Fang</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
+<title>White Fang — Born in the Wild</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
+/* ─── Reset ──────────────────────────────────────────── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --white:#ffffff;
+  --fog:#f4f5f7;
+  --mist:#e8ecf0;
+  --silver:#c8cdd4;
+  --ash:#8a9099;
+  --slate:#3d4147;
+  --ink:#1a1c1f;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Inter',system-ui,sans-serif;
 }
 
-body{
-font-family:'Inter',sans-serif;
-background:#ffffff;
-color:#111;
-overflow-x:hidden;
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--white);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+
+/* ─── Nav ────────────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:24px 6%;
+  transition:background 0.4s,backdrop-filter 0.4s;
+}
+nav.scrolled{background:rgba(255,255,255,0.88);backdrop-filter:blur(18px);border-bottom:1px solid rgba(0,0,0,0.06);}
+.nav__logo{font-family:var(--serif);font-size:1.25rem;font-weight:400;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink);text-decoration:none;}
+.nav__links{display:flex;gap:36px;list-style:none;}
+.nav__links a{font-size:0.68rem;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:var(--slate);text-decoration:none;transition:color 0.2s;}
+.nav__links a:hover{color:var(--ink);}
+
+/* ─── Hero ───────────────────────────────────────────── */
+.hero{
+  position:relative;width:100%;height:100vh;min-height:700px;overflow:hidden;
+  background:#dde3ea;
+}
+.hero__bg{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(to right, rgba(232,236,240,0.95) 36%, rgba(232,236,240,0.15) 68%),
+    url('https://images.unsplash.com/photo-1610034499386-e70f9e28be86?auto=format&fit=crop&w=1800&q=85') center/cover no-repeat;
+}
+.hero__content{
+  position:absolute;top:50%;left:8%;
+  transform:translateY(-50%);
+}
+.hero__title{
+  font-family:var(--serif);
+  font-size:clamp(5.5rem,11vw,10.5rem);
+  font-weight:300;letter-spacing:0.12em;line-height:0.9;
+  color:var(--ink);text-transform:uppercase;
+}
+.hero__rule{width:38px;height:1px;background:var(--slate);margin:30px 0 24px;}
+.hero__tagline{
+  font-size:0.72rem;font-weight:400;letter-spacing:0.05em;
+  color:var(--slate);line-height:2.3;
+}
+.hero__scroll{
+  position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+}
+.hero__scroll span{font-size:0.58rem;letter-spacing:0.24em;text-transform:uppercase;color:var(--ash);}
+.hero__scroll-line{width:1px;height:40px;background:var(--silver);animation:scrollpulse 2s ease-in-out infinite;}
+@keyframes scrollpulse{0%,100%{opacity:0.3;transform:scaleY(0.6);}50%{opacity:1;transform:scaleY(1);}}
+
+/* ─── Shared Section ─────────────────────────────────── */
+.s{padding:100px 8%;}
+.s--fog{background:var(--fog);}
+.s--mist{background:var(--mist);}
+.s--dark{background:var(--ink);color:var(--white);}
+.s--center{text-align:center;}
+
+.eyebrow{
+  display:block;font-size:0.62rem;font-weight:500;
+  letter-spacing:0.3em;text-transform:uppercase;
+  color:var(--ash);margin-bottom:14px;
+}
+.s--dark .eyebrow{color:rgba(255,255,255,0.4);}
+
+.s__title{
+  font-family:var(--serif);font-size:clamp(2.2rem,4.5vw,3.8rem);
+  font-weight:300;letter-spacing:0.2em;text-transform:uppercase;
+  line-height:1.15;
+}
+.s--dark .s__title{color:var(--white);}
+
+.hr{width:34px;height:1px;background:var(--silver);margin:20px 0 18px;}
+.hr--center{margin:20px auto 18px;}
+.s--dark .hr{background:rgba(255,255,255,0.2);}
+
+.s__body{
+  font-size:0.85rem;font-weight:300;line-height:1.95;
+  color:var(--ash);max-width:560px;
+}
+.s--dark .s__body{color:rgba(255,255,255,0.55);}
+.s--center .s__body{margin:0 auto;}
+
+/* ─── Full-Bleed Image ───────────────────────────────── */
+.fullbleed{width:100%;aspect-ratio:16/7;overflow:hidden;position:relative;}
+.fullbleed img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 8s ease;}
+.fullbleed:hover img{transform:scale(1.04);}
+.fullbleed__caption{
+  position:absolute;bottom:28px;right:32px;
+  font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;
+  color:rgba(255,255,255,0.55);
 }
 
-section{
-min-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-padding:80px 10%;
+/* ─── Two-Col Text ───────────────────────────────────── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.two-col--reverse .two-col__img{order:-1;}
+.two-col__img{border-radius:16px;overflow:hidden;aspect-ratio:4/5;}
+.two-col__img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.8s ease;}
+.two-col__img:hover img{transform:scale(1.05);}
+.two-col__text{}
+
+/* ─── Gallery 4-col ─────────────────────────────────── */
+.gallery4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:60px;}
+.gallery4 .g-item{border-radius:14px;overflow:hidden;aspect-ratio:3/4;background:var(--mist);}
+.gallery4 .g-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.7s cubic-bezier(.25,.46,.45,.94);}
+.gallery4 .g-item:hover img{transform:scale(1.07);}
+
+/* ─── Gallery 3-col ─────────────────────────────────── */
+.gallery3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:60px;}
+.gallery3 .g-item{border-radius:14px;overflow:hidden;aspect-ratio:3/4;background:var(--mist);}
+.gallery3 .g-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.7s ease;}
+.gallery3 .g-item:hover img{transform:scale(1.07);}
+
+/* ─── Masonry-ish 3 ──────────────────────────────────── */
+.gallery-feature{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:16px;margin-top:60px;}
+.gallery-feature .g-item{border-radius:14px;overflow:hidden;background:var(--mist);}
+.gallery-feature .g-item:first-child{grid-row:span 2;aspect-ratio:unset;}
+.gallery-feature .g-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.7s ease;}
+.gallery-feature .g-item:first-child img{height:100%;}
+.gallery-feature .g-item:not(:first-child){aspect-ratio:4/3;}
+.gallery-feature .g-item:hover img{transform:scale(1.06);}
+
+/* ─── Quote Block ────────────────────────────────────── */
+.quote-block{text-align:center;padding:110px 8%;}
+.quote-block.dark{background:var(--ink);}
+.qmark{font-family:var(--serif);font-size:4rem;line-height:0;opacity:0.7;display:block;margin-bottom:36px;color:var(--ink);}
+.dark .qmark{color:var(--white);}
+.qtext{
+  font-family:var(--serif);font-size:clamp(1.7rem,3.2vw,2.6rem);
+  font-weight:300;line-height:1.65;color:var(--ink);
+  max-width:700px;margin:0 auto;
 }
+.dark .qtext{color:var(--white);}
+.qtext em{font-style:italic;}
+.qdivider{width:32px;height:1px;background:var(--silver);margin:38px auto 30px;}
+.dark .qdivider{background:rgba(255,255,255,0.2);}
+.qsource{font-size:0.65rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--ash);}
+.dark .qsource{color:rgba(255,255,255,0.35);}
 
-.hero h1{
-font-size:5rem;
-font-weight:700;
-letter-spacing:8px;
-text-transform:uppercase;
+/* ─── Stats Row ──────────────────────────────────────── */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--silver);margin-top:60px;}
+.stat{background:var(--white);padding:44px 32px;text-align:center;}
+.stat__num{font-family:var(--serif);font-size:3.4rem;font-weight:300;color:var(--ink);letter-spacing:0.05em;line-height:1;}
+.stat__label{font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--ash);margin-top:10px;}
+
+/* ─── Timeline ───────────────────────────────────────── */
+.timeline{display:flex;flex-direction:column;gap:0;margin-top:60px;max-width:700px;}
+.tl-item{display:grid;grid-template-columns:80px 1px 1fr;gap:0 28px;padding-bottom:48px;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-year{font-family:var(--serif);font-size:1.2rem;font-weight:300;color:var(--ash);padding-top:2px;text-align:right;}
+.tl-line{background:var(--silver);position:relative;}
+.tl-line::before{content:'';position:absolute;top:8px;left:50%;transform:translateX(-50%);width:7px;height:7px;border-radius:50%;background:var(--ink);}
+.tl-content{}
+.tl-heading{font-family:var(--serif);font-size:1.3rem;font-weight:400;color:var(--ink);margin-bottom:8px;}
+.tl-desc{font-size:0.8rem;font-weight:300;line-height:1.85;color:var(--ash);}
+
+/* ─── Traits Grid ────────────────────────────────────── */
+.traits{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--silver);margin-top:60px;}
+.trait{background:var(--white);padding:48px 36px;}
+.s--dark .trait{background:rgba(255,255,255,0.04);}
+.trait__icon{font-family:var(--serif);font-size:2.2rem;font-weight:300;color:var(--ink);margin-bottom:20px;}
+.s--dark .trait__icon{color:rgba(255,255,255,0.6);}
+.trait__title{font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink);margin-bottom:12px;font-weight:500;}
+.s--dark .trait__title{color:rgba(255,255,255,0.8);}
+.trait__desc{font-size:0.78rem;font-weight:300;line-height:1.85;color:var(--ash);}
+.s--dark .trait__desc{color:rgba(255,255,255,0.4);}
+
+/* ─── Habitat Banner ─────────────────────────────────── */
+.habitat{position:relative;overflow:hidden;}
+.habitat__bg{
+  width:100%;aspect-ratio:21/9;
+  background:url('https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=1800&q=85') center/cover no-repeat;
+  position:relative;
 }
+.habitat__overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(10,12,15,0.75) 40%,rgba(10,12,15,0.2));}
+.habitat__text{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 8%;}
+.habitat__text .eyebrow{color:rgba(255,255,255,0.45);}
+.habitat__text .s__title{color:var(--white);max-width:480px;}
+.habitat__text .hr{background:rgba(255,255,255,0.25);}
+.habitat__text .s__body{color:rgba(255,255,255,0.6);}
 
-.hero p{
-margin-top:20px;
-font-size:1.2rem;
-color:#666;
-max-width:650px;
-text-align:center;
-line-height:1.8;
+/* ─── Pack social cards ──────────────────────────────── */
+.pack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:60px;}
+.pack-card{border-radius:18px;overflow:hidden;background:var(--fog);border:1px solid var(--silver);}
+.pack-card__img{aspect-ratio:1/1;overflow:hidden;}
+.pack-card__img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.7s ease;}
+.pack-card:hover .pack-card__img img{transform:scale(1.06);}
+.pack-card__body{padding:28px 28px 32px;}
+.pack-card__name{font-family:var(--serif);font-size:1.5rem;font-weight:400;color:var(--ink);margin-bottom:6px;}
+.pack-card__role{font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--ash);margin-bottom:14px;}
+.pack-card__desc{font-size:0.78rem;font-weight:300;line-height:1.85;color:var(--ash);}
+
+/* ─── Habitat Cards ──────────────────────────────────── */
+.habitat-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:60px;}
+.hcard{border-radius:16px;overflow:hidden;position:relative;aspect-ratio:16/9;}
+.hcard img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.8s ease;}
+.hcard:hover img{transform:scale(1.06);}
+.hcard__label{position:absolute;bottom:24px;left:24px;}
+.hcard__label .eyebrow{color:rgba(255,255,255,0.55);margin-bottom:4px;}
+.hcard__label h3{font-family:var(--serif);font-size:1.8rem;font-weight:300;color:var(--white);letter-spacing:0.08em;}
+.hcard__overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.55) 30%,transparent);}
+
+/* ─── Seasons ────────────────────────────────────────── */
+.seasons{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:60px;}
+.season{border-radius:14px;overflow:hidden;position:relative;aspect-ratio:2/3;}
+.season img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.7s ease;}
+.season:hover img{transform:scale(1.06);}
+.season__label{position:absolute;bottom:20px;left:0;right:0;text-align:center;}
+.season__label span{font-size:0.6rem;letter-spacing:0.26em;text-transform:uppercase;color:rgba(255,255,255,0.8);}
+
+/* ─── Large Text Feature ─────────────────────────────── */
+.text-feature{padding:120px 8%;background:var(--fog);}
+.text-feature__number{font-family:var(--serif);font-size:clamp(5rem,12vw,12rem);font-weight:300;color:var(--mist);line-height:1;display:block;}
+.text-feature__inner{margin-top:-40px;}
+
+/* ─── Horizontal Scroll Carousel ─────────────────────── */
+.carousel-wrap{overflow:hidden;margin-top:60px;}
+.carousel{display:flex;gap:16px;padding:4px 8%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;}
+.carousel::-webkit-scrollbar{display:none;}
+.c-item{flex:0 0 320px;border-radius:16px;overflow:hidden;aspect-ratio:3/4;scroll-snap-align:start;background:var(--mist);}
+.c-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.7s ease;}
+.c-item:hover img{transform:scale(1.06);}
+
+/* ─── Survival Guide ─────────────────────────────────── */
+.guide-items{display:flex;flex-direction:column;gap:0;margin-top:60px;}
+.g-row{display:grid;grid-template-columns:60px 1fr 1.4fr;gap:40px;align-items:start;padding:40px 0;border-top:1px solid var(--silver);}
+.g-row:last-child{border-bottom:1px solid var(--silver);}
+.g-num{font-family:var(--serif);font-size:2.8rem;font-weight:300;color:var(--silver);}
+.g-title{font-family:var(--serif);font-size:1.4rem;font-weight:400;color:var(--ink);line-height:1.3;}
+.g-desc{font-size:0.8rem;font-weight:300;line-height:1.95;color:var(--ash);}
+
+/* ─── Split Dark ─────────────────────────────────────── */
+.split-dark{display:grid;grid-template-columns:1fr 1fr;min-height:600px;}
+.split-dark__img{overflow:hidden;}
+.split-dark__img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.8s ease;}
+.split-dark__img:hover img{transform:scale(1.04);}
+.split-dark__text{background:var(--ink);display:flex;flex-direction:column;justify-content:center;padding:80px 60px;}
+.split-dark__text .eyebrow{color:rgba(255,255,255,0.35);}
+.split-dark__text .s__title{color:var(--white);}
+.split-dark__text .hr{background:rgba(255,255,255,0.15);}
+.split-dark__text .s__body{color:rgba(255,255,255,0.5);max-width:400px;}
+
+/* ─── Full Dark Quote ────────────────────────────────── */
+.dark-quote{background:var(--ink);padding:130px 8%;text-align:center;}
+.dark-quote .qmark{color:rgba(255,255,255,0.3);}
+.dark-quote .qtext{color:var(--white);}
+.dark-quote .qdivider{background:rgba(255,255,255,0.15);}
+.dark-quote .qsource{color:rgba(255,255,255,0.3);}
+
+/* ─── Closing CTA ────────────────────────────────────── */
+.cta{
+  position:relative;overflow:hidden;
+  min-height:560px;display:flex;align-items:center;justify-content:center;
 }
-
-.hero img{
-margin-top:70px;
-width:420px;
-max-width:90%;
-border-radius:25px;
-box-shadow:0 20px 60px rgba(0,0,0,.12);
-transition:.5s;
+.cta__bg{
+  position:absolute;inset:0;
+  background:url('https://images.unsplash.com/photo-1564466809058-bf4114d55352?auto=format&fit=crop&w=1800&q=85') center/cover no-repeat;
 }
+.cta__overlay{position:absolute;inset:0;background:rgba(10,12,15,0.6);}
+.cta__content{position:relative;z-index:1;text-align:center;padding:0 8%;}
+.cta__content .eyebrow{color:rgba(255,255,255,0.4);}
+.cta__title{font-family:var(--serif);font-size:clamp(3rem,6vw,6rem);font-weight:300;color:var(--white);letter-spacing:0.15em;text-transform:uppercase;margin:16px 0 28px;}
+.cta__sub{font-size:0.75rem;letter-spacing:0.08em;color:rgba(255,255,255,0.55);margin-bottom:48px;}
 
-.hero img:hover{
-transform:scale(1.03);
+/* ─── Footer ─────────────────────────────────────────── */
+footer{background:var(--ink);border-top:1px solid rgba(255,255,255,0.06);padding:60px 8% 40px;}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:60px;}
+.footer-brand .nav__logo{color:var(--white);display:inline-block;margin-bottom:16px;}
+.footer-brand p{font-size:0.75rem;font-weight:300;line-height:1.9;color:rgba(255,255,255,0.35);max-width:220px;}
+.footer-col h4{font-size:0.6rem;letter-spacing:0.26em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:20px;}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:12px;}
+.footer-col ul a{font-size:0.78rem;font-weight:300;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;}
+.footer-col ul a:hover{color:rgba(255,255,255,0.9);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.07);padding-top:28px;display:flex;justify-content:space-between;align-items:center;}
+.footer-bottom p{font-size:0.65rem;color:rgba(255,255,255,0.25);letter-spacing:0.06em;}
+
+/* ─── Mountain Icon ──────────────────────────────────── */
+.mtn-icon{display:flex;justify-content:center;margin-top:28px;}
+.mtn-icon svg{width:28px;height:28px;opacity:0.3;}
+
+/* ─── Scroll Reveal ──────────────────────────────────── */
+.r{opacity:0;transform:translateY(30px);transition:opacity 0.9s cubic-bezier(.16,1,.3,1),transform 0.9s cubic-bezier(.16,1,.3,1);}
+.r.v{opacity:1;transform:none;}
+.r.d1{transition-delay:0.1s;} .r.d2{transition-delay:0.2s;}
+.r.d3{transition-delay:0.3s;} .r.d4{transition-delay:0.4s;}
+.r.d5{transition-delay:0.5s;} .r.d6{transition-delay:0.6s;}
+
+/* ─── Responsive ─────────────────────────────────────── */
+@media(max-width:1024px){
+  .two-col{grid-template-columns:1fr;}
+  .two-col--reverse .two-col__img{order:0;}
+  .gallery4{grid-template-columns:repeat(2,1fr);}
+  .traits{grid-template-columns:repeat(2,1fr);}
+  .pack-grid{grid-template-columns:repeat(2,1fr);}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .stats{grid-template-columns:repeat(2,1fr);}
+  .split-dark{grid-template-columns:1fr;}
+  .split-dark__img{aspect-ratio:16/9;}
 }
-
-.gallery{
-padding-top:60px;
-padding-bottom:100px;
+@media(max-width:700px){
+  nav{padding:18px 5%;}
+  .nav__links{display:none;}
+  .hero__title{font-size:4.2rem;}
+  .s{padding:72px 5%;}
+  .gallery3,.gallery4,.seasons{grid-template-columns:repeat(2,1fr);}
+  .pack-grid,.habitat-cards{grid-template-columns:1fr;}
+  .gallery-feature{grid-template-columns:1fr;}
+  .gallery-feature .g-item:first-child{grid-row:span 1;}
+  .traits{grid-template-columns:1fr;}
+  .g-row{grid-template-columns:40px 1fr;gap:20px;}
+  .g-row .g-desc{grid-column:2;}
+  .footer-grid{grid-template-columns:1fr;}
+  .footer-bottom{flex-direction:column;gap:12px;text-align:center;}
+  .stats{grid-template-columns:repeat(2,1fr);}
 }
-
-.gallery h2{
-font-size:2.5rem;
-margin-bottom:50px;
-font-weight:600;
+@media(prefers-reduced-motion:reduce){
+  .r{opacity:1;transform:none;transition:none;}
+  *{animation:none!important;transition:none!important;}
 }
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:25px;
-width:100%;
-max-width:1200px;
-}
-
-.card{
-overflow:hidden;
-border-radius:20px;
-background:white;
-box-shadow:0 15px 35px rgba(0,0,0,.08);
-transition:.4s;
-}
-
-.card:hover{
-transform:translateY(-10px);
-box-shadow:0 25px 45px rgba(0,0,0,.15);
-}
-
-.card img{
-width:100%;
-height:360px;
-object-fit:cover;
-display:block;
-transition:.5s;
-}
-
-.card:hover img{
-transform:scale(1.08);
-}
-
-.quote{
-padding:120px 10%;
-text-align:center;
-}
-
-.quote h2{
-font-size:3rem;
-font-weight:300;
-line-height:1.5;
-max-width:900px;
-}
-
-.quote span{
-font-weight:700;
-}
-
-.fade{
-opacity:0;
-transform:translateY(40px);
-transition:1s;
-}
-
-.fade.show{
-opacity:1;
-transform:translateY(0);
-}
-
-@media(max-width:768px){
-
-.hero h1{
-font-size:3rem;
-letter-spacing:4px;
-}
-
-.quote h2{
-font-size:2rem;
-}
-
-}
-
 </style>
-
 </head>
 <body>
 
-<section class="hero fade">
+<!-- ═══ NAV ════════════════════════════════════════════ -->
+<nav id="nav">
+  <a class="nav__logo" href="#">White Fang</a>
+  <ul class="nav__links">
+    <li><a href="#origin">Origin</a></li>
+    <li><a href="#wild">Wild</a></li>
+    <li><a href="#pack">Pack</a></li>
+    <li><a href="#habitat">Habitat</a></li>
+    <li><a href="#legacy">Legacy</a></li>
+  </ul>
+</nav>
 
-<h1>WHITE FANG</h1>
-
-<p>
-Strength isn't always loud.
-Sometimes it walks silently through the snow,
-watching the world with calm eyes.
-</p>
-
-<img src="https://images.unsplash.com/photo-1516939884455-1445c8652f83?auto=format&fit=crop&w=900&q=80">
-
+<!-- ═══ 01. HERO ════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero__bg"></div>
+  <div class="hero__content r">
+    <h1 class="hero__title">White<br>Fang</h1>
+    <div class="hero__rule"></div>
+    <p class="hero__tagline">
+      Strength. Loyalty. Freedom.<br>
+      Born in the wild.<br>
+      Meant to be remembered.
+    </p>
+  </div>
+  <div class="hero__scroll">
+    <span>Scroll</span>
+    <div class="hero__scroll-line"></div>
+  </div>
 </section>
 
-
-<section class="gallery fade">
-
-<h2>Wild Beauty</h2>
-
-<div class="grid">
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1474511320723-9a56873867b5?auto=format&fit=crop&w=900&q=80">
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1501706362039-c6e80948a1d1?auto=format&fit=crop&w=900&q=80">
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=900&q=80">
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1474511016488-0067304b4d0b?auto=format&fit=crop&w=900&q=80">
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=900&q=80">
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80">
-</div>
-
-</div>
-
+<!-- ═══ 02. WILD BEAUTY GALLERY ════════════════════════ -->
+<section class="s s--center" id="wild">
+  <div class="r">
+    <span class="eyebrow">Collection</span>
+    <h2 class="s__title">Wild Beauty</h2>
+    <div class="hr hr--center"></div>
+    <p class="s__body">Nature's perfection captured in every moment.</p>
+  </div>
+  <div class="gallery4">
+    <div class="g-item r d1"><img src="https://images.unsplash.com/photo-1610034499386-e70f9e28be86?auto=format&fit=crop&w=700&q=80" alt="White wolf on rocks"></div>
+    <div class="g-item r d2"><img src="https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=700&q=80" alt="White wolf walking forward"></div>
+    <div class="g-item r d3"><img src="https://images.unsplash.com/photo-1564466809058-bf4114d55352?auto=format&fit=crop&w=700&q=80" alt="Wolf howling"></div>
+    <div class="g-item r d4"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=700&q=80" alt="White wolf in snow forest"></div>
+  </div>
 </section>
 
+<!-- ═══ 03. ORIGIN QUOTE ════════════════════════════════ -->
+<div class="quote-block r">
+  <span class="qmark">&ldquo;</span>
+  <p class="qtext">The wolf never loses sleep<br>over the opinion of sheep.<br>It simply continues its <em>journey.</em></p>
+  <div class="qdivider"></div>
+  <div class="mtn-icon">
+    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="16,4 28,26 4,26" fill="none" stroke="#1a1c1f" stroke-width="1.2" stroke-linejoin="round"/>
+      <polyline points="10,26 16,14 22,26" fill="none" stroke="#1a1c1f" stroke-width="1.2" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</div>
 
-<section class="quote fade">
+<!-- ═══ 04. FULL BLEED — MOUNTAINS ══════════════════════ -->
+<div class="fullbleed r">
+  <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1800&q=85" alt="Snowy mountain range">
+  <span class="fullbleed__caption">Arctic Range — 68°N</span>
+</div>
 
-<h2>
-"The wolf never loses sleep over the opinion of sheep.
-It simply continues its <span>journey.</span>"
-</h2>
-
+<!-- ═══ 05. ORIGIN STORY ════════════════════════════════ -->
+<section class="s" id="origin">
+  <div class="two-col">
+    <div class="two-col__text r">
+      <span class="eyebrow">Origin</span>
+      <h2 class="s__title">Born of Ice<br>and Stone</h2>
+      <div class="hr"></div>
+      <p class="s__body">White Fang came into the world in the cold grey of a Canadian dawn — a world of frost and fang, of silence broken only by the wind. His story is not one of domestication but of transformation: a wild thing learning what it means to trust, and a man learning what it means to be trusted.<br><br>Jack London wrote him not as a pet, but as a mirror — a creature through which we examine our own impulses toward dominance, violence, and ultimately, love.</p>
+    </div>
+    <div class="two-col__img r d2">
+      <img src="https://images.unsplash.com/photo-1474511320723-9a56873867b5?auto=format&fit=crop&w=900&q=80" alt="Wolf in snowy forest">
+    </div>
+  </div>
 </section>
+
+<!-- ═══ 06. STATS ════════════════════════════════════════ -->
+<div class="stats r">
+  <div class="stat"><span class="stat__num">1906</span><p class="stat__label">Year Published</p></div>
+  <div class="stat"><span class="stat__num">327</span><p class="stat__label">Pages, First Edition</p></div>
+  <div class="stat"><span class="stat__num">68°</span><p class="stat__label">North Latitude, Yukon</p></div>
+  <div class="stat"><span class="stat__num">∞</span><p class="stat__label">Lives in Print</p></div>
+</div>
+
+<!-- ═══ 07. TIMELINE ════════════════════════════════════ -->
+<section class="s s--fog" id="legacy">
+  <div class="r">
+    <span class="eyebrow">Chronicle</span>
+    <h2 class="s__title">The Journey</h2>
+    <div class="hr"></div>
+    <p class="s__body">From the Yukon wilds to the sun-warmed hills of California — every scar a lesson, every bond a choice.</p>
+  </div>
+  <div class="timeline r d1">
+    <div class="tl-item">
+      <span class="tl-year">Birth</span>
+      <div class="tl-line"></div>
+      <div class="tl-content"><h4 class="tl-heading">The Wild Calls</h4><p class="tl-desc">White Fang is born in a cave near the Mackenzie River — half-wolf, half-dog. His first memories are firelight, hunger, and his mother's warmth against the cold.</p></div>
+    </div>
+    <div class="tl-item">
+      <span class="tl-year">Youth</span>
+      <div class="tl-line"></div>
+      <div class="tl-content"><h4 class="tl-heading">Grey Beaver's Camp</h4><p class="tl-desc">Captured by the Mackenzie Indians, he learns the law of men — obedience through pain, loyalty through necessity. His spirit bends but never fully breaks.</p></div>
+    </div>
+    <div class="tl-item">
+      <span class="tl-year">Dark</span>
+      <div class="tl-line"></div>
+      <div class="tl-content"><h4 class="tl-heading">Beauty Smith's Pit</h4><p class="tl-desc">Sold into cruelty, he becomes a fighter — savage, feared, empty. The wild in him transforms into something colder: the will to survive without hope.</p></div>
+    </div>
+    <div class="tl-item">
+      <span class="tl-year">Dawn</span>
+      <div class="tl-line"></div>
+      <div class="tl-content"><h4 class="tl-heading">Weedon Scott</h4><p class="tl-desc">A man with patient hands and a quiet voice. For the first time, White Fang encounters something he has no name for — kindness. It undoes him, slowly, completely.</p></div>
+    </div>
+    <div class="tl-item">
+      <span class="tl-year">Home</span>
+      <div class="tl-line"></div>
+      <div class="tl-content"><h4 class="tl-heading">California Sun</h4><p class="tl-desc">The wolf-dog who once knew only ice learns the warmth of a house, a family, a purpose. He does not forget the wild — but he chooses something greater.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 08. FULL BLEED — WOLF PORTRAIT ══════════════════ -->
+<div class="fullbleed r">
+  <img src="https://images.unsplash.com/photo-1501706362039-c6e80948a1d1?auto=format&fit=crop&w=1800&q=85" alt="Arctic wolf portrait">
+  <span class="fullbleed__caption">Canis lupus arctos</span>
+</div>
+
+<!-- ═══ 09. CHARACTER TRAITS ════════════════════════════ -->
+<section class="s s--dark">
+  <div class="r">
+    <span class="eyebrow">Character</span>
+    <h2 class="s__title" style="color:var(--white);">What He<br>Is Made Of</h2>
+    <div class="hr"></div>
+  </div>
+  <div class="traits r d1">
+    <div class="trait" style="background:rgba(255,255,255,0.04);">
+      <div class="trait__icon" style="color:rgba(255,255,255,0.6);">Ι</div>
+      <h4 class="trait__title" style="color:rgba(255,255,255,0.8);">Strength</h4>
+      <p class="trait__desc" style="color:rgba(255,255,255,0.4);">Not the strength of a bully, but the endurance of a creature who has faced every hardship nature could design — and walked forward regardless.</p>
+    </div>
+    <div class="trait" style="background:rgba(255,255,255,0.04);">
+      <div class="trait__icon" style="color:rgba(255,255,255,0.6);">ΙΙ</div>
+      <h4 class="trait__title" style="color:rgba(255,255,255,0.8);">Loyalty</h4>
+      <p class="trait__desc" style="color:rgba(255,255,255,0.4);">Once given, his devotion is absolute — a contract written not in language but in action, held together by instinct older than civilization.</p>
+    </div>
+    <div class="trait" style="background:rgba(255,255,255,0.04);">
+      <div class="trait__icon" style="color:rgba(255,255,255,0.6);">ΙΙΙ</div>
+      <h4 class="trait__title" style="color:rgba(255,255,255,0.8);">Intelligence</h4>
+      <p class="trait__desc" style="color:rgba(255,255,255,0.4);">He reads the world through scent, sound, and the subtle language of posture — a cognition that predates all human systems of knowing.</p>
+    </div>
+    <div class="trait" style="background:rgba(255,255,255,0.04);">
+      <div class="trait__icon" style="color:rgba(255,255,255,0.6);">ΙV</div>
+      <h4 class="trait__title" style="color:rgba(255,255,255,0.8);">Resilience</h4>
+      <p class="trait__desc" style="color:rgba(255,255,255,0.4);">He has been starved, beaten, and betrayed — yet each time he adapts, not merely surviving but reshaping himself for whatever the world demands next.</p>
+    </div>
+    <div class="trait" style="background:rgba(255,255,255,0.04);">
+      <div class="trait__icon" style="color:rgba(255,255,255,0.6);">V</div>
+      <h4 class="trait__title" style="color:rgba(255,255,255,0.8);">Freedom</h4>
+      <p class="trait__desc" style="color:rgba(255,255,255,0.4);">Even in captivity, something in him remains untouchable — a territory of self that no chain, no cruelty, no human will could fully colonize.</p>
+    </div>
+    <div class="trait" style="background:rgba(255,255,255,0.04);">
+      <div class="trait__icon" style="color:rgba(255,255,255,0.6);">VΙ</div>
+      <h4 class="trait__title" style="color:rgba(255,255,255,0.8);">Transformation</h4>
+      <p class="trait__desc" style="color:rgba(255,255,255,0.4);">The true miracle is not that he survived the wild — it is that he learned to love. That a creature shaped by violence could discover something beyond it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 10. HABITAT BANNER ══════════════════════════════ -->
+<div class="habitat r" id="habitat">
+  <div class="habitat__bg">
+    <div class="habitat__overlay"></div>
+    <div class="habitat__text">
+      <span class="eyebrow">Habitat</span>
+      <h2 class="s__title">The Yukon<br>Territory</h2>
+      <div class="hr"></div>
+      <p class="s__body">Where winter lasts nine months and the silence is so complete you can hear your own heartbeat — this is where White Fang learned the first law: eat or be eaten.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 11. HABITAT CARDS ════════════════════════════════ -->
+<section class="s">
+  <div class="r">
+    <span class="eyebrow">Territories</span>
+    <h2 class="s__title">Landscapes<br>of the North</h2>
+    <div class="hr"></div>
+    <p class="s__body">The world that formed White Fang — vast, indifferent, magnificent.</p>
+  </div>
+  <div class="habitat-cards">
+    <div class="hcard r d1">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1000&q=80" alt="Mountain peaks">
+      <div class="hcard__overlay"></div>
+      <div class="hcard__label">
+        <span class="eyebrow">Zone 01</span>
+        <h3>The High Passes</h3>
+      </div>
+    </div>
+    <div class="hcard r d2">
+      <img src="https://images.unsplash.com/photo-1477322524744-0eece9e79640?auto=format&fit=crop&w=1000&q=80" alt="Frozen forest">
+      <div class="hcard__overlay"></div>
+      <div class="hcard__label">
+        <span class="eyebrow">Zone 02</span>
+        <h3>The Boreal Forest</h3>
+      </div>
+    </div>
+    <div class="hcard r d3">
+      <img src="https://images.unsplash.com/photo-1451440063999-77a8b2960d2b?auto=format&fit=crop&w=1000&q=80" alt="Frozen river">
+      <div class="hcard__overlay"></div>
+      <div class="hcard__label">
+        <span class="eyebrow">Zone 03</span>
+        <h3>The River Valleys</h3>
+      </div>
+    </div>
+    <div class="hcard r d4">
+      <img src="https://images.unsplash.com/photo-1476610182048-b716b8518aae?auto=format&fit=crop&w=1000&q=80" alt="Arctic tundra">
+      <div class="hcard__overlay"></div>
+      <div class="hcard__label">
+        <span class="eyebrow">Zone 04</span>
+        <h3>The Open Tundra</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 12. DARK QUOTE ══════════════════════════════════ -->
+<div class="dark-quote r">
+  <span class="qmark">&ldquo;</span>
+  <p class="qtext">He was different from his fellows, <em>and he knew it.</em><br>Not better, not worse — simply shaped by a different fire.</p>
+  <div class="qdivider"></div>
+  <span class="qsource">Jack London — White Fang, 1906</span>
+</div>
+
+<!-- ═══ 13. PACK ═════════════════════════════════════════ -->
+<section class="s s--fog" id="pack">
+  <div class="r">
+    <span class="eyebrow">The Pack</span>
+    <h2 class="s__title">Those Who<br>Shaped Him</h2>
+    <div class="hr"></div>
+    <p class="s__body">Every creature's character is the sum of those who loved or broke them. White Fang was no exception.</p>
+  </div>
+  <div class="pack-grid">
+    <div class="pack-card r d1">
+      <div class="pack-card__img"><img src="https://images.unsplash.com/photo-1474511320723-9a56873867b5?auto=format&fit=crop&w=600&q=80" alt="Kiche wolf"></div>
+      <div class="pack-card__body">
+        <h3 class="pack-card__name">Kiche</h3>
+        <p class="pack-card__role">The Mother</p>
+        <p class="pack-card__desc">A she-wolf who had once known human camps — and human cruelty. She gave White Fang not only life but the instinct to endure. In her eyes he first learned that the world had two kinds of fire: the one that warms and the one that burns.</p>
+      </div>
+    </div>
+    <div class="pack-card r d2">
+      <div class="pack-card__img"><img src="https://images.unsplash.com/photo-1545468800-85cc9bc6ecf7?auto=format&fit=crop&w=600&q=80" alt="Grey Beaver"></div>
+      <div class="pack-card__body">
+        <h3 class="pack-card__name">Grey Beaver</h3>
+        <p class="pack-card__role">The Master</p>
+        <p class="pack-card__desc">Neither kind nor cruel — simply a man of his world. He owned White Fang the way he owned a tool: without malice, without love. Under him, the wolf learned the weight of belonging to another.</p>
+      </div>
+    </div>
+    <div class="pack-card r d3">
+      <div class="pack-card__img"><img src="https://images.unsplash.com/photo-1504173010664-32509107096b?auto=format&fit=crop&w=600&q=80" alt="Weedon Scott"></div>
+      <div class="pack-card__body">
+        <h3 class="pack-card__name">Weedon Scott</h3>
+        <p class="pack-card__role">The Redeemer</p>
+        <p class="pack-card__desc">He saw not the snarling fighter in the pit but something underneath — a creature that had once been capable of trust. His patience was not weakness. It was the most radical act in the book: the decision to keep trying.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 14. THREE-COL GALLERY ═══════════════════════════ -->
+<section class="s s--center">
+  <div class="r">
+    <span class="eyebrow">In the Field</span>
+    <h2 class="s__title">Portraits of<br>the Wild North</h2>
+    <div class="hr hr--center"></div>
+  </div>
+  <div class="gallery3">
+    <div class="g-item r d1"><img src="https://images.unsplash.com/photo-1557093793-e196ae071479?auto=format&fit=crop&w=700&q=80" alt="Wolf in forest"></div>
+    <div class="g-item r d2"><img src="https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?auto=format&fit=crop&w=700&q=80" alt="Wolf close-up"></div>
+    <div class="g-item r d3"><img src="https://images.unsplash.com/photo-1574482619664-8039c23c7929?auto=format&fit=crop&w=700&q=80" alt="Wolf in snow"></div>
+  </div>
+</section>
+
+<!-- ═══ 15. SURVIVAL GUIDE ══════════════════════════════ -->
+<section class="s s--fog">
+  <div class="r">
+    <span class="eyebrow">The Code</span>
+    <h2 class="s__title">Laws of<br>the Wild</h2>
+    <div class="hr"></div>
+    <p class="s__body">The rules that govern the world north of the 60th parallel — the principles White Fang lived and nearly died by.</p>
+  </div>
+  <div class="guide-items r d1">
+    <div class="g-row">
+      <span class="g-num">01</span>
+      <h4 class="g-title">Eat or Be Eaten</h4>
+      <p class="g-desc">The primal equation that governs all life in the north. There is no morality in hunger — only the constant, cold arithmetic of predator and prey. White Fang understood this before he had words for it.</p>
+    </div>
+    <div class="g-row">
+      <span class="g-num">02</span>
+      <h4 class="g-title">Obey the Strong</h4>
+      <p class="g-desc">The pack functions through hierarchy — not cruelty, but clarity. Each animal knows its place and the energy saved from endless conflict goes into survival. This law saved White Fang's life more than once.</p>
+    </div>
+    <div class="g-row">
+      <span class="g-num">03</span>
+      <h4 class="g-title">Protect the Den</h4>
+      <p class="g-desc">The cave is life. The den is warmth against a world that offers none. White Fang extended this principle to the humans he came to love — their home became his den, and he defended it absolutely.</p>
+    </div>
+    <div class="g-row">
+      <span class="g-num">04</span>
+      <h4 class="g-title">Adapt or Perish</h4>
+      <p class="g-desc">The Yukon selects for flexibility above all else. Seasons change, prey moves, alliances shift. The animal that cannot change its habits to match a changing world becomes history. White Fang changed — again and again.</p>
+    </div>
+    <div class="g-row">
+      <span class="g-num">05</span>
+      <h4 class="g-title">Trust Is Earned</h4>
+      <p class="g-desc">In the wild, trust is not given — it accumulates through repeated proof of intent. White Fang's capacity to love Weedon Scott was not weakness; it was the highest expression of an intelligence capable of learning from experience.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 16. SPLIT DARK ══════════════════════════════════ -->
+<div class="split-dark r">
+  <div class="split-dark__img">
+    <img src="https://images.unsplash.com/photo-1498429089284-41f8cf3ffd39?auto=format&fit=crop&w=1000&q=80" alt="Wolf in darkness">
+  </div>
+  <div class="split-dark__text">
+    <span class="eyebrow">The Dark Season</span>
+    <h2 class="s__title" style="color:var(--white);">When the Sun<br>Does Not Rise</h2>
+    <div class="hr" style="background:rgba(255,255,255,0.15);"></div>
+    <p class="s__body" style="color:rgba(255,255,255,0.5);">The arctic winter is not metaphorical — it is 67 days of continuous night. In that darkness, creatures either find their inner light or go cold. White Fang had known this darkness since birth. It made him patient. It made him dangerous. It made him, eventually, capable of an extraordinary love.</p>
+  </div>
+</div>
+
+<!-- ═══ 17. SEASONS GALLERY ══════════════════════════════ -->
+<section class="s s--center">
+  <div class="r">
+    <span class="eyebrow">Through the Year</span>
+    <h2 class="s__title">Four Seasons<br>of the North</h2>
+    <div class="hr hr--center"></div>
+    <p class="s__body">Each season rewrites the rules. Each demands a different wolf.</p>
+  </div>
+  <div class="seasons">
+    <div class="season r d1">
+      <img src="https://images.unsplash.com/photo-1547721064-da6cfb341d50?auto=format&fit=crop&w=600&q=80" alt="Winter">
+      <div class="season__label"><span>Winter</span></div>
+    </div>
+    <div class="season r d2">
+      <img src="https://images.unsplash.com/photo-1462275646964-a0e3386b89fa?auto=format&fit=crop&w=600&q=80" alt="Spring">
+      <div class="season__label"><span>Spring</span></div>
+    </div>
+    <div class="season r d3">
+      <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=600&q=80" alt="Summer">
+      <div class="season__label"><span>Summer</span></div>
+    </div>
+    <div class="season r d4">
+      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" alt="Autumn">
+      <div class="season__label"><span>Autumn</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 18. FEATURED MASONRY ════════════════════════════ -->
+<section class="s s--fog">
+  <div class="r">
+    <span class="eyebrow">Gallery</span>
+    <h2 class="s__title">The Unforgettable<br>Moments</h2>
+    <div class="hr"></div>
+  </div>
+  <div class="gallery-feature">
+    <div class="g-item r d1" style="aspect-ratio:unset;min-height:500px;">
+      <img src="https://images.unsplash.com/photo-1516934024742-b461fba47600?auto=format&fit=crop&w=800&q=80" alt="Wolf standing tall" style="height:100%;object-fit:cover;">
+    </div>
+    <div class="g-item r d2" style="aspect-ratio:4/3;">
+      <img src="https://images.unsplash.com/photo-1547187042-5e2da0b16a47?auto=format&fit=crop&w=800&q=80" alt="Wolf running in snow" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+    <div class="g-item r d3" style="aspect-ratio:4/3;">
+      <img src="https://images.unsplash.com/photo-1609952048180-7b35ea6b083b?auto=format&fit=crop&w=800&q=80" alt="Wolf in forest light" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 19. HORIZONTAL CAROUSEL ═════════════════════════ -->
+<section class="s s--center">
+  <div class="r">
+    <span class="eyebrow">Extended Collection</span>
+    <h2 class="s__title">More from<br>the Wild</h2>
+    <div class="hr hr--center"></div>
+  </div>
+</section>
+<div class="carousel-wrap r">
+  <div class="carousel">
+    <div class="c-item"><img src="https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=500&q=80" alt="Wolf 1"></div>
+    <div class="c-item"><img src="https://images.unsplash.com/photo-1474511020688-166dc03f11c4?auto=format&fit=crop&w=500&q=80" alt="Wolf 2"></div>
+    <div class="c-item"><img src="https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?auto=format&fit=crop&w=500&q=80" alt="Wolf 3"></div>
+    <div class="c-item"><img src="https://images.unsplash.com/photo-1467534823073-4b83f3c60e85?auto=format&fit=crop&w=500&q=80" alt="Wolf 4"></div>
+    <div class="c-item"><img src="https://images.unsplash.com/photo-1560807707-8cc77767d783?auto=format&fit=crop&w=500&q=80" alt="Wolf 5"></div>
+    <div class="c-item"><img src="https://images.unsplash.com/photo-1548767797-d8c844163c4a?auto=format&fit=crop&w=500&q=80" alt="Wolf 6"></div>
+    <div class="c-item"><img src="https://images.unsplash.com/photo-1564466809058-bf4114d55352?auto=format&fit=crop&w=500&q=80" alt="Wolf 7"></div>
+  </div>
+</div>
+
+<!-- ═══ 20. TWO COL REVERSE ══════════════════════════════ -->
+<section class="s">
+  <div class="two-col two-col--reverse">
+    <div class="two-col__img r d1">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=900&q=80" alt="Wolf in forest">
+    </div>
+    <div class="two-col__text r d2">
+      <span class="eyebrow">Legacy</span>
+      <h2 class="s__title">The Wolf<br>Endures</h2>
+      <div class="hr"></div>
+      <p class="s__body">More than a century after London wrote him, White Fang remains the defining portrait of the wild animal at the threshold of civilisation — not broken by human contact, but shaped by it in ways that made him more fully himself.<br><br>He is read in schools, adapted for screens, quoted in locker rooms and boardrooms and wilderness cabins. The reason is simple: he is every creature who has ever been asked to survive circumstances beyond its choosing — and has.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 21. CLOSING QUOTE ════════════════════════════════ -->
+<div class="dark-quote r">
+  <span class="qmark">&ldquo;</span>
+  <p class="qtext">He was not afraid of the dark.<br>He had been born in it.<br>What surprised him was <em>the light.</em></p>
+  <div class="qdivider"></div>
+  <span class="qsource">White Fang — Chapter XVIII</span>
+</div>
+
+<!-- ═══ 22. FINAL CTA ════════════════════════════════════ -->
+<section class="cta">
+  <div class="cta__bg"></div>
+  <div class="cta__overlay"></div>
+  <div class="cta__content r">
+    <span class="eyebrow" style="color:rgba(255,255,255,0.4);">The Wild Calls</span>
+    <h2 class="cta__title">Remember<br>the Wolf</h2>
+    <p class="cta__sub">Born in the wild. Meant to be remembered.</p>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══════════════════════════════════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a class="nav__logo" href="#">White Fang</a>
+      <p>A tribute to Jack London's enduring portrait of the wild — the wolf who learned to love without losing himself.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="#origin">Origin</a></li>
+        <li><a href="#wild">Wild Beauty</a></li>
+        <li><a href="#pack">The Pack</a></li>
+        <li><a href="#habitat">Habitat</a></li>
+        <li><a href="#legacy">Legacy</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>The Story</h4>
+      <ul>
+        <li><a href="#">Jack London</a></li>
+        <li><a href="#">The Yukon</a></li>
+        <li><a href="#">First Edition</a></li>
+        <li><a href="#">Adaptations</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Conservation</h4>
+      <ul>
+        <li><a href="#">Arctic Wolves</a></li>
+        <li><a href="#">Wolf Trust</a></li>
+        <li><a href="#">Habitat Fund</a></li>
+        <li><a href="#">In the Wild</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 White Fang — A tribute to Jack London</p>
+    <p style="letter-spacing:0.22em;font-size:0.58rem;color:rgba(255,255,255,0.18);">BORN IN THE WILD</p>
+  </div>
+</footer>
 
 <script>
-
-const observer=new IntersectionObserver(entries=>{
-
-entries.forEach(entry=>{
-
-if(entry.isIntersecting){
-
-entry.target.classList.add("show");
-
-}
-
+// Nav scroll
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
 });
 
-});
-
-document.querySelectorAll(".fade").forEach(el=>observer.observe(el));
-
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('v'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.r').forEach(el => observer.observe(el));
 </script>
-
 </body>
 </html>
