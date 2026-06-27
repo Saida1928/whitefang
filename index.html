@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>White Fang</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Inter',sans-serif;
+background:#ffffff;
+color:#111;
+overflow-x:hidden;
+}
+
+section{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+padding:80px 10%;
+}
+
+.hero h1{
+font-size:5rem;
+font-weight:700;
+letter-spacing:8px;
+text-transform:uppercase;
+}
+
+.hero p{
+margin-top:20px;
+font-size:1.2rem;
+color:#666;
+max-width:650px;
+text-align:center;
+line-height:1.8;
+}
+
+.hero img{
+margin-top:70px;
+width:420px;
+max-width:90%;
+border-radius:25px;
+box-shadow:0 20px 60px rgba(0,0,0,.12);
+transition:.5s;
+}
+
+.hero img:hover{
+transform:scale(1.03);
+}
+
+.gallery{
+padding-top:60px;
+padding-bottom:100px;
+}
+
+.gallery h2{
+font-size:2.5rem;
+margin-bottom:50px;
+font-weight:600;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
+width:100%;
+max-width:1200px;
+}
+
+.card{
+overflow:hidden;
+border-radius:20px;
+background:white;
+box-shadow:0 15px 35px rgba(0,0,0,.08);
+transition:.4s;
+}
+
+.card:hover{
+transform:translateY(-10px);
+box-shadow:0 25px 45px rgba(0,0,0,.15);
+}
+
+.card img{
+width:100%;
+height:360px;
+object-fit:cover;
+display:block;
+transition:.5s;
+}
+
+.card:hover img{
+transform:scale(1.08);
+}
+
+.quote{
+padding:120px 10%;
+text-align:center;
+}
+
+.quote h2{
+font-size:3rem;
+font-weight:300;
+line-height:1.5;
+max-width:900px;
+}
+
+.quote span{
+font-weight:700;
+}
+
+.fade{
+opacity:0;
+transform:translateY(40px);
+transition:1s;
+}
+
+.fade.show{
+opacity:1;
+transform:translateY(0);
+}
+
+@media(max-width:768px){
+
+.hero h1{
+font-size:3rem;
+letter-spacing:4px;
+}
+
+.quote h2{
+font-size:2rem;
+}
+
+}
+
+</style>
+
+</head>
+<body>
+
+<section class="hero fade">
+
+<h1>WHITE FANG</h1>
+
+<p>
+Strength isn't always loud.
+Sometimes it walks silently through the snow,
+watching the world with calm eyes.
+</p>
+
+<img src="https://images.unsplash.com/photo-1516939884455-1445c8652f83?auto=format&fit=crop&w=900&q=80">
+
+</section>
+
+
+<section class="gallery fade">
+
+<h2>Wild Beauty</h2>
+
+<div class="grid">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1474511320723-9a56873867b5?auto=format&fit=crop&w=900&q=80">
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1501706362039-c6e80948a1d1?auto=format&fit=crop&w=900&q=80">
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=900&q=80">
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1474511016488-0067304b4d0b?auto=format&fit=crop&w=900&q=80">
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=900&q=80">
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80">
+</div>
+
+</div>
+
+</section>
+
+
+<section class="quote fade">
+
+<h2>
+"The wolf never loses sleep over the opinion of sheep.
+It simply continues its <span>journey.</span>"
+</h2>
+
+</section>
+
+<script>
+
+const observer=new IntersectionObserver(entries=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+entry.target.classList.add("show");
+
+}
+
+});
+
+});
+
+document.querySelectorAll(".fade").forEach(el=>observer.observe(el));
+
+</script>
+
+</body>
+</html>
